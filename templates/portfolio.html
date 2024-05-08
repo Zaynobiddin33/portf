@@ -1,0 +1,743 @@
+{%load static%}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  </head>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .loader-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: black;
+      z-index: 9999;
+      overflow: hidden;
+    }
+
+    .loader {
+      background-color: #3498db; /* Blue */
+      position: relative;
+      top: 50%;
+      height: 2px;
+      width: 0;
+      animation: loadingAnimation 7s linear forwards;
+    }
+
+    @keyframes loadingAnimation {
+      0% { width: 0; }
+      100% { width: 100%; }
+    }
+
+    .loading-text {
+      position: relative;
+      top: 50%;
+      text-align: center;
+    }
+
+    .loaded .loader-wrapper {
+      display: none;
+    }
+  </style>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
+
+@keyframes animate{
+  from{
+    right: 0px;
+  }
+  to{
+    right: 400px;
+  }
+
+}
+
+    body{
+      background-color: rgb(16, 16, 16);
+      /* background-color: white; */
+    font-family: "Pixelify Sans", sans-serif;
+    width: 100%;
+
+    color: white;
+    }
+    .data{
+    background-color: rgb(30, 30, 32);
+    border: 5px solid rgb(16, 16, 16);
+   
+    }
+    .colored{
+    background-color: rgb(83, 95, 125);
+    border: 5px solid rgb(16, 16, 16);
+    }
+    .colored2{
+      background-color: antiquewhite;
+      border-top: 10px solid black;
+    }
+    .h500{
+      height: 400px;
+    }
+    .h700{
+      height: 700px;
+    }
+    .hfull{
+      height: 820px;
+    }
+    div{
+      border-radius: 3vw;
+    }
+    .bord{
+      border: 4px solid rgb(16, 16, 16);
+
+    }
+    .profile{
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 1px solid black;
+      background-image: url("{% static 'assets/illustration.jpg' %}");
+      background-size: 100%;
+      font-size: 50px;
+    }
+    .aboutme{
+      margin-top: 10vh;
+      width: 400px;
+      height: 60px;
+      /* border: 1px solid white; */
+      border-bottom: 1px solid white;
+      border-left: 1px solid white;
+      border-top: 1px solid white;
+      border-right: 1px solid white;
+      border-radius: 90px;
+      font-size: 20px;
+      text-align: center;
+      color: white;
+      text-decoration: none;
+    }
+    .aboutme:hover{
+      background-color: rgb(41, 41, 43);
+      border: none;
+      border-top: 1px solid white;
+      border-bottom: 1px solid rgb(30, 30, 32);
+      transition: 1s linear;
+      color: rgb(123, 123, 123);
+    }
+    #container {
+        overflow: hidden;
+        position: relative; /* Change to relative */
+    }
+
+    #background {
+        width: 102%;
+        height: 102%;
+        position: absolute;
+        border-radius: 50px;
+        top: -1%;
+        left: -1%;
+        cursor: url("{% static 'img/hole.png'%}") 50 50,  auto;
+       
+    }
+    a{
+      text-decoration: none;
+      color: white;
+    }
+    .parent{
+      background-color: rgb(30, 30, 32);
+    }
+
+    .con{
+      position: relative;
+      overflow: hidden;
+      transition: 1s;
+      background-color: rgb(44, 40, 43);
+      background-size: 150%;
+      
+    }
+    .con:hover{
+      /* background-color: orange; */
+      /* background-image: url(dots.jpg' %}); */
+      background-color: orange;
+      background-image: none;
+      border-radius: 50px;
+      color: black;
+      background-size: 150%;
+    }
+    #followBtn{
+      border-radius: 20px;
+      position: absolute;
+      width: 200px;
+      height: 50px;
+      border: none;
+      background-color: rgb(219, 252, 0);
+
+    }
+    #followBtn:hover{
+      background-color: white;
+      border: 1px solid black;
+    }
+        .media:hover{
+      background-color: white;
+      color: black;
+      transition: 0.5s;
+    }
+  @keyframes logo {
+    from{
+      transform: translateX(0);
+    }
+    to{
+      transform: translateX(-100%);
+    }
+  }
+  .logos:hover .logos-slide{
+    animation-play-state: paused;
+    transition: 1s;
+  }
+  .logos:hover .logos-slide2{
+    animation-play-state: paused;
+    transition: 1s;
+  }
+  .logos{
+    width: 500px;
+    margin: 0;
+    display: flex;
+    border-radius: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+  }
+  .logos::before{
+    left: 0;
+    width: 80px;
+    background: linear-gradient(to left, transparent, rgb(30, 30 , 32));
+  }
+
+  .logos::after{
+    right: 0;
+    width: 80px;
+    background: linear-gradient(to right, transparent, rgb(30, 30 , 32));
+  }
+  .logos::before,
+  .logos::after{
+    position: absolute;
+    top: 0;
+    pointer-events: none; /* Ignore pointer events */
+    height: 100%;
+    content: "";
+    z-index: 2;
+  }
+
+  .logos-slide{
+    display: flex;
+    animation: 4s infinite logo linear;
+  }
+  .logo{
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    padding: 10px;
+    background-color: black;
+    margin: 10px;
+  }
+  .logo:hover{
+    transform: translateY(-10px);
+    transition: 0.5s;
+  }
+  .logos-slide2{
+    display: flex;
+    animation: 4s infinite logo linear reverse;
+  }
+
+
+
+  </style>
+  <body>
+    
+    <div class="loader-wrapper">
+      <div class="loader" style="border-radius: 0;"></div>
+      <div class="loading-text" style="color: white;">Loading...</div>            
+    </div>
+    
+
+    
+    <div class="row m-xl-5 m-sm-2">
+        <div class="col-xl-3 col-12-lg col-md-12 h700 bord">
+          <div class="col-12 ms-2">
+            <div class="col-12 mt-3 d-flex" style="height: 70px;">
+              <div class="profile"></div>
+              <div class="ms-2">
+                <h1 class="m-0">Zayn.S</h1>
+                <h6>Backend dev</h6>
+              </div>
+              </div>
+              <div class="col-12  justify-content-left d-flex mt-3">
+                <h1>Hello...</h1>
+              </div>
+              <div class="col-12 ps-1">
+                <h4>My friend. Welcome to my website. I'm Zaynobiddin. Please take a look at my portfolio and have a wonderful time exploring.</h4>
+              </div>
+              <div class="col-12  justify-content-left d-flex">
+                <h1>Who I am?</h1>
+              </div>
+              <div class="col-12 ps-1">
+                <h4>19-year-old backend developer, functional website builder, punctual person, physics and astronomy lover...
+                </h4>
+              </div>
+          </div>
+          <div class="col-12 justify-content-center d-flex mt-lg-5">
+            <a class="aboutme align-items-center d-flex justify-content-center" href="{% url 'about' %}">More About Me</a>
+          </div>
+          
+        </div>
+
+        <div class="col-xl-9  col-md-12 hfull p-0 ps-3 pe-3">
+          <div class="col-12 mt-3 bord justify-content-center d-flex align-items-center overflow-hidden " style="height: 70px; background-color: rgb(35, 35, 36);"  >
+            <h4 style="color: rgb(186, 186, 186);" id="local-time"></h4>  <!--days-->
+          </div>
+          
+          <div class="col-12 d-lg-flex" style="height: 100%;">
+            <div class="col-xl-6 col-lg-6 col-sm-12  mt-3" style="height: 86%;">
+              <div class="col-12 bord justify-content-center d-flex" style="height: 60%; background-color:  rgb(20, 20, 21);" id="container">
+                <a href="{%url 'projects'%}">
+                  <canvas id="background"></canvas>
+                  <h1 class="ms-2" style="color: white; ">Explore my projects <span><h4>(just tap)</h4></span></h1>
+                </a>
+              </div>
+              <div class="col-12 d-lg-flex overflow-hidden" style="height: 40%;">
+                <div class="  col-12 bord overflow-hidden m-0" style="height: 100%;">
+                  <div class="col-12 m-0 p-2" style="height: 100%; border-radius: 0; border: none; background-color: rgb(30, 30, 32);">
+                    <div class="col-12 ms-3">
+                      <h1>You can find me on</h1>
+                      <div class="row me-4 d-flex justify-content-center" style="height: fit-content; border-radius: 0;">
+                        <div class="logos d-flex align-items-center">
+                          <div class="logos-slide">
+                            <a href="https://github.com/Zaynobiddin33"><div class="logo" style="background-image: url({% static 'img/github.jpg' %}); background-size: 140%; background-position: center;"></div></a>
+                            <a href="https://t.me/zaynobiddin_shakhabiddinov"><div class="logo" style="background-image: url({% static 'img/telegram.png'%}); background-size: 110%; background-position: center;"></div></a>
+                            <a href="https://www.linkedin.com/in/zaynobiddin-shoxobiddinov-20b3502b8/"><div class="logo" style="background-image: url({% static 'img/linkedin.png'%}); background-size: 110%; background-position: center;"></div></a>
+                            <a href="https://www.threads.net/@zaynobiddinshaxobiddinov"><div class="logo" style="background-image: url({% static 'img/thread.png'%}); background-size: 110%; background-position: center;"></div></a>
+                            <a href="https://discord.com/channels/1027096739670409237/1027096739670409240"><div class="logo" style="background-image: url({% static 'img/discord2.png'%}); background-size: 110%; background-position: center;"></div></a>
+                           
+                            
+                            
+                          </div>
+                          <div class="logos-slide">
+                            <a href="https://github.com/Zaynobiddin33"><div class="logo" style="background-image: url({% static 'img/github.jpg' %}); background-size: 140%; background-position: center;"></div></a>
+                            <a href="https://t.me/zaynobiddin_shakhabiddinov"><div class="logo" style="background-image: url({% static 'img/telegram.png'%}); background-size: 110%; background-position: center;"></div></a>
+                            <a href="https://www.linkedin.com/in/zaynobiddin-shoxobiddinov-20b3502b8/"><div class="logo" style="background-image: url({% static 'img/linkedin.png'%}); background-size: 110%; background-position: center;"></div></a>
+                            <a href="https://www.threads.net/@zaynobiddinshaxobiddinov"><div class="logo" style="background-image: url({% static 'img/thread.png'%}); background-size: 110%; background-position: center;"></div></a>
+                            <a href="https://discord.com/channels/1027096739670409237/1027096739670409240"><div class="logo" style="background-image: url({% static 'img/discord2.png'%}); background-size: 110%; background-position: center;"></div></a>
+
+                            
+                            
+                          </div>
+                      </div>
+
+                      
+                      </div>
+                      <div class="row">
+                        <div class="row me-4 d-flex justify-content-center" style="height: fit-content; border-radius: 0;">
+                          <div class="logos d-flex align-items-center">
+                            <div class="logos-slide2">
+                              <a href="https://www.facebook.com/zaynobiddin.shaxobiddinov"><div class="logo" style="background-image: url({% static 'img/facebook.png'%}); background-size: 110%; background-position: center;"></div></a>
+                              <a href="https://www.reddit.com/user/Psychological_Tap676/"><div class="logo" style="background-image: url({% static 'img/redd.png'%}); background-size: 110%; background-position: center;"></div></a>
+                              <a href="https://twitter.com/Zaynob1ddin"><div class="logo" style="background-image: url({% static 'img/x.png'%}); background-size: 110%; background-position: center;"></div></a>
+                              <a href="https://www.instagram.com/zaynobiddinshaxobiddinov/"><div class="logo" style="background-image: url({% static 'img/instagram.png'%}); background-size: 110%; background-position: center;"></div></a>
+                              <a href="https://www.quora.com/profile/Zaynobiddin-Shaxobiddinov"><div class="logo" style="background-image: url({% static 'img/quora.png'%}); background-size: 110%; background-position: center;"></div></a>
+                          
+                              
+                            </div>
+                            <div class="logos-slide2">
+                              <a href="https://www.facebook.com/zaynobiddin.shaxobiddinov"><div class="logo" style="background-image: url({% static 'img/facebook.png'%}); background-size: 110%; background-position: center;"></div></a>
+                              <a href="https://www.reddit.com/user/Psychological_Tap676/"><div class="logo" style="background-image: url({% static 'img/redd.png'%}); background-size: 110%; background-position: center;"></div></a>
+                              <a href="https://twitter.com/Zaynob1ddin"><div class="logo" style="background-image: url({% static 'img/x.png'%}); background-size: 110%; background-position: center;"></div></a>
+                              <a href="https://www.instagram.com/zaynobiddinshaxobiddinov/"><div class="logo" style="background-image: url({% static 'img/instagram.png'%}); background-size: 110%; background-position: center;"></div></a>
+                              <a href="https://www.quora.com/profile/Zaynobiddin-Shaxobiddinov"><div class="logo" style="background-image: url({% static 'img/quora.png'%}); background-size: 110%; background-position: center;"></div></a>
+
+                              
+                            </div>
+                        </div>
+  
+                        
+                        </div>
+                      </div>
+                    </div>
+
+                    
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-sm-12 mt-lg-3" style="height: 86%;">
+              <div class="col-12 bord parent" style="height: 30%; background-image: url({% static 'assets/dot2.jpg' %}); background-size: 150%;">
+                <div class="col-12 justify-content-center align-items-left d-flex" style="height: 30%;"><h2>I'm good at</h2></div>
+
+                <div class="col-12 justify-content-center align-items-left d-flex pt-2 mb-3" style="height: 40%;">
+                  <h1 style="font-size: 50px;" class="typing"></h1>
+                </div>
+                <div class="col-12 justify-content-center d-flex" style="height: 30%;">
+                  <!-- <h3 style="color:  rgb(30, 30, 32);">learn more..</h3> -->
+                </div>
+              </div>
+              <div class="col-12 bord con" style="height: 40%;">
+                <div class="col-12" style="height: 70px;">
+                  <h1 class="ms-4" style="font-weight: 100; ">I was waiting <br> for your message, <br> say me hi</h1>
+                </div>
+                <div class="col-12">
+                  <a class="ms-3" href="{%url 'contact'%}"><button id="followBtn" style='top: 150px;'>Contact</button></a>
+                </div>
+              </div>
+              <div class="col-12 bord overflow-hidden" style="height: 30%; background-color: rgb(173, 182, 190);">
+                <div class="col-12 d-flex justify-content-center">
+                  <h3 class="m-4" style="color: black;">I've been a backend developer for...</h3>
+                </div>
+        
+                <div class="col-12 d-flex justify-content-center align-items-center p-5 pb-0 pt-0" style="border-radius: 1px;" >
+                  <div class="col-2 justify-content-center align-items-center d-flex" style=" height: 40px; color: black; border-left: 3px solid transparent;">
+                  <h1 id="years" style="font-size: 30px; white-space: nowrap;"></h1>
+                  </div>
+        
+                  <div class="col-2 justify-content-center align-items-center d-flex" style=" height: 40px; color: black; border-left: 3px solid transparent; ">
+                    <h1 id="months" style="font-size: 30px; white-space: nowrap;"></h1>
+                  </div>
+        
+                  <div class="col-2 justify-content-center align-items-center d-flex" style=" height: 40px; color: black; border-left: 3px solid transparent; ">
+                    <h1 id="days" style="font-size: 30px; white-space: nowrap;"></h1>
+                  </div>
+        
+                  <div class="col-2 justify-content-center align-items-center d-flex" style=" height: 40px; color: black; border-left: 3px solid transparent; ">
+                    <h1 id="hours" style="font-size: 30px; white-space: nowrap;"></h1>
+                  </div>
+        
+                  <div class="col-2 justify-content-center align-items-center d-flex" style=" height: 40px; color: black; border-left: 3px solid transparent; ">
+                    <h1 id="minutes" style="font-size: 30px; white-space: nowrap;"></h1>
+                  </div>
+        
+                  <div class="col-2 justify-content-center align-items-center d-flex" style=" height: 40px; color: black; border-left: 3px solid transparent; ">
+                    <h1 id="seconds" style="font-size: 30px; white-space: nowrap;"></h1>
+                    </div>
+        
+                </div>
+        
+                <div class="col-12 d-flex justify-content-center ps-5 pe-5" style="border-radius: 0;">
+        
+                  <div class="col-2 justify-content-center align-items-center d-flex" style=" color: black; border-left: 3px solid transparent;">
+                    <h1 style="font-size:   15px;">yrs</h1>
+                  </div>
+        
+                  <div class="col-2 justify-content-center align-items-center d-flex" style=" color: black; border-left: 3px solid transparent;">
+                    <h1 style="font-size:  15px;">mnth</h1>
+                  </div>
+        
+                  <div class="col-2 justify-content-center align-items-center d-flex" style=" color: black; border-left: 3px solid transparent;">
+                    <h1 style="font-size: 15px;">dys</h1>
+                  </div>
+        
+                  <div class="col-2 justify-content-center align-items-center d-flex" style=" color: black; border-left: 3px solid transparent;">
+                    <h1 style="font-size: 15px;">hrs</h1>
+                  </div>
+        
+                  <div class="col-2 justify-content-center align-items-center d-flex" style=" color: black; border-left: 3px solid transparent;">
+                    <h1 style="font-size: 15px;">mins</h1>
+                  </div>
+        
+                  <div class="col-2 justify-content-center align-items-center d-flex" style=" color: black; border-left: 3px solid transparent;">
+                    <h1 style="font-size: 15px; ">scnds</h1>
+                  </div>
+        
+                
+                </div></div>
+            </div>
+            
+          </div>
+        </div>
+    </div>
+
+
+
+
+  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script>
+      const words = ['Python', 'Django', 'Postgres','rest API', 'html', 'css', 'Bootstrap', 'Git', 'Github'];
+      let index = 0;
+      const element = document.querySelector('.typing');
+      const parentDiv = document.getElementById('parentDiv');
+  
+      function changeWord() {
+        element.textContent = words[index];
+        index = (index + 1) % words.length;
+      }
+  
+      let intervalId = setInterval(() => {
+        changeWord();
+      }, 500);
+  
+      parentDiv.addEventListener('mouseenter', () => {
+        clearInterval(intervalId);
+      });
+  
+      parentDiv.addEventListener('mouseleave', () => {
+        intervalId = setInterval(() => {
+          changeWord();
+        }, 500);
+      });
+    </script>
+  
+  <script>
+    // Set the target date (replace with your own)
+    const targetDate = new Date('2023-12-22T00:00:00');
+  
+    function getTimeSince(targetDate) {
+      const currentDate = new Date();
+      const timeDifference = currentDate - targetDate;
+  
+      // Calculate the elapsed time in milliseconds, seconds, minutes, hours, days, months, and years
+      const milliseconds = timeDifference;
+      const seconds = Math.floor(milliseconds / 1000);
+      const minutes = Math.floor(seconds / 60);
+      const hours = Math.floor(minutes / 60);
+      const days = Math.floor(hours / 24);
+      const months = Math.floor(days / 30);
+      const years = Math.floor(months / 12);
+  
+      // Calculate remaining time
+      const remainingMonths = months % 12;
+      const remainingDays = days % 30;
+      const remainingHours = hours % 24;
+      const remainingMinutes = minutes % 60;
+      const remainingSeconds = seconds % 60;
+  
+      // Function to pad single digit numbers with leading zero
+      function padNumber(num) {
+        return num < 10 ? '0' + num : num;
+      }
+  
+      // Update the content of each div element with the corresponding time unit
+      document.getElementById('years').textContent = `${padNumber(years)}:`;
+      document.getElementById('months').textContent = ` ${padNumber(remainingMonths)}:`;
+      document.getElementById('days').textContent = ` ${padNumber(remainingDays)}:`;
+      document.getElementById('hours').textContent = ` ${padNumber(remainingHours)}:`;
+      document.getElementById('minutes').textContent = `${padNumber(remainingMinutes)}:`;
+      if (remainingDays == '00'){
+        document.getElementById('seconds').textContent = `${padNumber(remainingSeconds)}  🎉`;
+      }
+      else{
+        document.getElementById('seconds').textContent = `${padNumber(remainingSeconds)}`;
+      }
+    }
+  
+    // Update the time since every second
+    function updateTimeSince() {
+      getTimeSince(targetDate);
+    }
+  
+    updateTimeSince(); // Initial call to start updating time since
+    setInterval(updateTimeSince, 1000); // Update every second
+  </script>
+  
+  
+<script>
+  const conDiv = document.querySelector('.con');
+const followBtn = document.getElementById('followBtn');
+
+conDiv.addEventListener('mousemove', (event) => {
+  const rect = conDiv.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+
+  // Ensure button stays within the div bounds
+  const btnWidth = followBtn.offsetWidth;
+  const btnHeight = followBtn.offsetHeight;
+
+  const maxX = rect.width - btnWidth;
+  const maxY = rect.height - btnHeight;
+
+  const newX = Math.min(maxX, Math.max(0, x - btnWidth / 2));
+  const newY = Math.min(maxY, Math.max(0, y - btnHeight / 2));
+
+  followBtn.style.left = newX + 'px';
+  followBtn.style.top = newY + 'px';
+});
+
+</script>
+  
+  <script>
+    const mediaElements = document.querySelectorAll('.media');
+  
+    mediaElements.forEach(media => {
+      media.addEventListener('mouseenter', () => {
+        const audio = document.getElementById('mediaSound');
+        audio.play();
+      });
+    });
+  </script>
+  
+  
+  <script>
+    const canvas = document.getElementById('background');
+    const ctx = canvas.getContext('2d');
+    const particles = [];
+    const numParticles = 10000; // Increase the number of particles
+
+    // Get the container div
+    const container = document.getElementById('container');
+
+    // Set canvas dimensions to match container
+    canvas.width = container.offsetWidth;
+    canvas.height = container.offsetHeight;
+
+    // Create random particles
+    for (let i = 0; i < numParticles; i++) {
+        particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            vx: Math.random() * 2 -1,
+            vy: Math.random() * 2 -1
+        });
+    }
+
+    let isHovering = false; // Flag to track hovering state
+    let centerX = 0;
+    let centerY = 0;
+    let pulls = 0;
+
+    function drawParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = 'white'; // Set particle fill color to white
+        particles.forEach(particle => {
+            ctx.beginPath();
+            ctx.arc(particle.x, particle.y, 0.8, 0, Math.PI * 2);
+            ctx.fill();
+        });
+    }
+
+    function updateParticles() {
+        particles.forEach(particle => {
+            // Apply gravity effect only if hovering
+            if (isHovering) {
+                const dx = particle.x - centerX;
+                const dy = particle.y - centerY;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                const gravity = distance < 400 && distance>30? 1 : 0.05; // Adjust gravity based on distance
+                
+                particle.vx -= dx / distance * gravity;
+                particle.vy -= dy / distance * gravity;
+
+                // Reset particle position towards cursor after 30-40 pulls
+                if (pulls >= 0 && pulls<=3 ) {
+                    particle.x += (centerX - particle.x) * 0.005;
+                    particle.y += (centerY - particle.y) * 0.005;
+                }
+            }
+
+            // Update particle position
+            particle.x += particle.vx;
+            particle.y += particle.vy;
+
+            // Bounce off walls
+            if (particle.x < 0 || particle.x > canvas.width) {
+                particle.vx *= -0;
+            }
+            if (particle.y < 0 || particle.y > canvas.height) {
+                particle.vy *= -0;
+            }
+        });
+    }
+
+    function animate() {
+        drawParticles();
+        updateParticles();
+        requestAnimationFrame(animate);
+    }
+
+    // Update mouse coordinates based on container position
+    container.addEventListener('mousemove', function(e) {
+        isHovering = true; // Set hovering flag to true
+        const rect = canvas.getBoundingClientRect();
+        centerX = e.clientX - rect.left;
+        centerY = e.clientY - rect.top;
+    });
+
+    container.addEventListener('mouseleave', function() {
+        isHovering = false; // Set hovering flag to false when leaving canvas
+        pulls = 0; // Reset pulls counter when leaving canvas
+    });
+
+    animate();
+</script>
+
+<script>
+  // Function to hide the loader when all resources are loaded
+  function hideLoader() {
+    // Add the 'loaded' class to the body element to hide the loader
+    document.body.classList.add('loaded');
+  }
+
+  // Event listener to hide the loader when all resources are loaded
+  window.addEventListener('load', hideLoader);
+
+  // Check if all resources have been loaded (including images, scripts, and stylesheets)
+  document.addEventListener("DOMContentLoaded", function() {
+    var totalResources = document.querySelectorAll('img, script, link[rel="stylesheet"]').length;
+    var loadedResources = 0;
+
+    // Function to check if all resources are loaded
+    function checkAllResourcesLoaded() {
+      loadedResources++;
+      if (loadedResources === totalResources) {
+        hideLoader(); // Hide the loader when all resources are loaded
+      }
+    }
+
+    // Event listeners to track the loading of each resource
+    var images = document.getElementsByTagName('img');
+    for (var i = 0; i < images.length; i++) {
+      images[i].addEventListener('load', checkAllResourcesLoaded);
+    }
+
+    var scripts = document.getElementsByTagName('script');
+    for (var j = 0; j < scripts.length; j++) {
+      scripts[j].addEventListener('load', checkAllResourcesLoaded);
+    }
+
+    var stylesheets = document.querySelectorAll('link[rel="stylesheet"]');
+    for (var k = 0; k < stylesheets.length; k++) {
+      stylesheets[k].addEventListener('load', checkAllResourcesLoaded);
+    }
+  });
+</script>
+
+
+<script>
+  function updateTime() {
+    // Create a Date object with the current time in Uzbekistan timezone
+    var now = new Date().toLocaleString("en-US", {timeZone: "Asia/Tashkent"});
+
+    // Format the time
+    var timeString = now.split(", ")[1]; // Extract time part
+
+    // Update the HTML element with the formatted time
+    document.getElementById("local-time").innerHTML = "My local time (Uzbekistan): " + timeString;
+
+    // Update every second
+    setTimeout(updateTime, 1000);
+  }
+
+  // Call updateTime function to start updating the time
+  updateTime();
+</script>
+  </body>
+</html>                
