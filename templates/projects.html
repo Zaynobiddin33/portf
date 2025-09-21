@@ -147,20 +147,22 @@
     }
   </style>
   <body>
-    <div class="row m-xl-5 p-sm-2">
+    <div class="row p-xl-5 p-sm-2">
         <div class="col-xl-3 col-12-lg col-md-12 bord position-sticky " style="height: fit-content; min-height: 200px; background-color:  rgb(16, 16, 16); top: 0; border-radius: 0;">
+          <a href="{%url 'main'%}">
             <div class="col-12 mt-3 d-flex" style="height: 70px;">
                 <div class="profile"></div>
                 <div class="ms-2">
                   <h1 class="m-0">Zayn.S</h1>
                   <h6>Backend dev</h6>
                 </div>
-                </div>
+            </div>
+          </a>
                 <div class="col-12  justify-content-left d-flex mt-3">
                     <br>
                 </div>
                 <div class="col-12 ps-1">
-                  <h4 style="padding-bottom: 30px;">Welcome to a showcase of my backend development journey! Delve into a meticulously crafted collection of my projects, each intricately designed and passionately developed. From database architectures to server-side scripting, every project narrates a distinctive tale of innovation and unwavering dedication to the craft.</h4>
+                  <h4 style="padding-bottom: 30px;">Welcome to a showcase of my backend development journey! <br><br> Delve into a meticulously crafted collection of my projects, each intricately designed and passionately developed. <br><br> From database architectures to server-side scripting, every project narrates a distinctive tale of innovation and unwavering dedication to the craft.</h4>
                 </div>
                 <div class="col-12 ms-2">
               
@@ -217,7 +219,7 @@ projs.forEach(proj => {
     const shower = document.querySelector('.shower');
     shower.innerHTML = ''; // Clear existing content
     technologies.forEach(tech => {
-      shower.innerHTML += `<h2 style="white-space: nowrap; font-size:2vw">${tech.trim()}</h2>`; // Add each technology as a separate h1
+      shower.innerHTML += `<h2 style="white-space: nowrap; font-size:2vw;">${tech.trim()}</h2>`; // Add each technology as a separate h1
     });
   });
 

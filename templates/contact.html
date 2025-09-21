@@ -118,17 +118,23 @@
         color: white;
         font-size: 24px;
     }
+    .url:hover{
+      background-color: rgb(30, 30, 32);
+      transition: 0.2s ease;
+    }
   </style>
   <body>
-    <div class="row m-xl-5 p-sm-2">
+    <div class="row p-xl-5 p-sm-2" style="min-height: 100vh; overflow: hidden;">
         <div class="col-xl-3 col-12-lg col-md-12 bord d-lg-block d-none" style="height: fit-content; min-height: 200px; background-color:  rgb(16, 16, 16); top: 0; border-radius: 0;">
-            <div class="col-12 mt-3 d-flex" style="height: 70px;">
+          <a href="{%url 'main'%}" style="color: white; text-decoration: none;">
+            <div class="col-12 mt-3 d-flex url" style="height: 70px;">
                 <div class="profile"></div>
                 <div class="ms-2">
                   <h1 class="m-0">Zayn.S</h1>
                   <h6>Backend dev</h6>
                 </div>
-                </div>
+            </div>
+          </a>
                 <div class="col-12  justify-content-left d-flex mt-3">
                     <br>
                 </div>
@@ -155,7 +161,7 @@
                     <form class="col-12" method="post">{%csrf_token%}
                         <input name="email" class="message col-12" type="email" placeholder="Email" required>
                         
-                        <textarea name="message" class="message col-12" cols="30" rows="6" placeholder="message" required></textarea>
+                        <textarea name="message" class="message col-12" cols="30" rows="4" placeholder="message" required></textarea>
                         
                         <button class="btn_submit col-12 col-xl-3">Send</button>
                     </form>

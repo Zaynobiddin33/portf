@@ -79,7 +79,7 @@
    
     }
     .colored{
-    background-color: rgb(83, 95, 125);
+    background-color: rgb(175, 180, 193);
     border: 5px solid rgb(16, 16, 16);
     }
     .colored2{
@@ -170,7 +170,7 @@
       /* background-image: url(dots.jpg' %}); */
       background-color: orange;
       background-image: none;
-      border-radius: 50px;
+      border-radius: 20px;
       color: black;
       background-size: 150%;
     }
@@ -271,16 +271,18 @@
     
 
     
-    <div class="row m-xl-5 m-sm-2">
+    <div class="row m-sm-2">
         <div class="col-xl-3 col-12-lg col-md-12 h700 bord">
           <div class="col-12 ms-2">
-            <div class="col-12 mt-3 d-flex" style="height: 70px;">
-              <div class="profile"></div>
-              <div class="ms-2">
-                <h1 class="m-0">Zayn.S</h1>
-                <h6>Backend dev</h6>
+            <a href="{%url 'main'%}">
+              <div class="col-12 mt-3 d-flex" style="height: 70px;">
+                  <div class="profile"></div>
+                  <div class="ms-2">
+                    <h1 class="m-0">Zayn.S</h1>
+                    <h6>Backend dev</h6>
+                  </div>
               </div>
-              </div>
+            </a>
               <div class="col-12  justify-content-left d-flex mt-3">
                 <h1>Hello...</h1>
               </div>
@@ -291,7 +293,7 @@
                 <h1>Who I am?</h1>
               </div>
               <div class="col-12 ps-1">
-                <h4>19-year-old backend developer, functional website builder, punctual person, physics and astronomy lover...
+                <h4>20-year-old backend developer, functional website builder, punctual person, physics and astronomy lover...
                 </h4>
               </div>
           </div>
@@ -395,10 +397,10 @@
                   <h1 class="ms-4" style="font-weight: 100; ">I was waiting <br> for your message, <br> say me hi</h1>
                 </div>
                 <div class="col-12">
-                  <a class="ms-3" href="{%url 'contact'%}"><button id="followBtn" style='top: 150px;'>Contact</button></a>
+                  <a class="ms-3" href="{%url 'contact'%}"><button id="followBtn" style='top: 180px;'>Contact</button></a>
                 </div>
               </div>
-              <div class="col-12 bord overflow-hidden" style="height: 30%; background-color: rgb(173, 182, 190);">
+              <div class="col-12 bord overflow-hidden colored" style="height: 30%; ">
                 <div class="col-12 d-flex justify-content-center">
                   <h3 class="m-4" style="color: black;">I've been a backend developer for...</h3>
                 </div>
@@ -548,10 +550,17 @@
     setInterval(updateTimeSince, 1000); // Update every second
   </script>
   
-  
+<!-- followBtn -->
 <script>
   const conDiv = document.querySelector('.con');
 const followBtn = document.getElementById('followBtn');
+
+const initialX = '5%';  // Initial X position (center)
+const initialY = '55%';  // Initial Y position (center)
+
+// Center the button initially
+followBtn.style.left = initialX;
+followBtn.style.top = initialY;
 
 conDiv.addEventListener('mousemove', (event) => {
   const rect = conDiv.getBoundingClientRect();
@@ -568,12 +577,21 @@ conDiv.addEventListener('mousemove', (event) => {
   const newX = Math.min(maxX, Math.max(0, x - btnWidth / 2));
   const newY = Math.min(maxY, Math.max(0, y - btnHeight / 2));
 
+  // Move the button smoothly to follow the mouse
+  followBtn.style.transition = 'none';  // Disable transition during movement
   followBtn.style.left = newX + 'px';
   followBtn.style.top = newY + 'px';
 });
 
+conDiv.addEventListener('mouseleave', () => {
+  // Add a smooth transition for the return to the original position
+  followBtn.style.transition = 'all 0.5s ease';  // Smooth return when mouse leaves
+  followBtn.style.left = initialX;
+  followBtn.style.top = initialY;
+});
 </script>
   
+<!-- music -->
   <script>
     const mediaElements = document.querySelectorAll('.media');
   
@@ -585,7 +603,7 @@ conDiv.addEventListener('mousemove', (event) => {
     });
   </script>
   
-  
+  <!-- gravity -->
   <script>
     const canvas = document.getElementById('background');
     const ctx = canvas.getContext('2d');
@@ -619,7 +637,7 @@ conDiv.addEventListener('mousemove', (event) => {
         ctx.fillStyle = 'white'; // Set particle fill color to white
         particles.forEach(particle => {
             ctx.beginPath();
-            ctx.arc(particle.x, particle.y, 0.8, 0, Math.PI * 2);
+            ctx.arc(particle.x, particle.y, 0.7, 0, Math.PI * 2);
             ctx.fill();
         });
     }
@@ -637,7 +655,7 @@ conDiv.addEventListener('mousemove', (event) => {
                 particle.vy -= dy / distance * gravity;
 
                 // Reset particle position towards cursor after 30-40 pulls
-                if (pulls >= 0 && pulls<=3 ) {
+                if (pulls >= 0 && pulls<3 ) {
                     particle.x += (centerX - particle.x) * 0.005;
                     particle.y += (centerY - particle.y) * 0.005;
                 }
@@ -649,10 +667,10 @@ conDiv.addEventListener('mousemove', (event) => {
 
             // Bounce off walls
             if (particle.x < 0 || particle.x > canvas.width) {
-                particle.vx *= -0;
+                particle.vx *= -0.5;
             }
             if (particle.y < 0 || particle.y > canvas.height) {
-                particle.vy *= -0;
+                particle.vy *= -0.5;
             }
         });
     }
