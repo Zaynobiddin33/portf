@@ -5,16 +5,19 @@ from . import models
 # Create your views here.
 
 def main(request):
-    if request.user.is_authenticated:
+     technologies_raw = models.Techs.objects.all()
+     technologies = [tech.name for tech in technologies_raw]
+     if request.user.is_authenticated:
         context = {
-             'messages': models.Messages.objects.all().order_by('-id')
+             'messages': models.Messages.objects.all().order_by('-id'),
+             'techs': technologies
         }
-    else:
+     else:
         context = {
-             'messages': 0
+             'messages': 0,
+             'techs': technologies
         }
-        
-    return render(request,'portfolio.html', context)
+     return render(request,'portfolio.html', context)
 
 def contact(request):
      if request.method == 'POST':
