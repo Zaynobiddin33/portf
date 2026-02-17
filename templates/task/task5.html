@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ACCESS GRANTED</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0a0a0a;
+      color: #00ff41;
+      font-family: 'Share Tech Mono', monospace;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    /* CRT scanlines */
+    .scanlines {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: repeating-linear-gradient(0deg, rgba(0,0,0,0.15) 0px, rgba(0,0,0,0.15) 1px, transparent 1px, transparent 3px);
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .content {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 20px;
+    }
+
+    @keyframes glitchIn {
+      0% { clip-path: inset(50% 0 50% 0); opacity: 0; }
+      10% { clip-path: inset(30% 0 40% 0); opacity: 0.5; }
+      20% { clip-path: inset(60% 0 10% 0); opacity: 0.3; }
+      30% { clip-path: inset(10% 0 70% 0); opacity: 0.7; }
+      40% { clip-path: inset(40% 0 20% 0); opacity: 0.4; }
+      50% { clip-path: inset(20% 0 30% 0); opacity: 0.8; }
+      60% { clip-path: inset(0 0 50% 0); opacity: 0.6; }
+      70% { clip-path: inset(50% 0 0 0); opacity: 0.9; }
+      80% { clip-path: inset(10% 0 10% 0); opacity: 0.7; }
+      90% { clip-path: inset(5% 0 5% 0); opacity: 0.95; }
+      100% { clip-path: inset(0 0 0 0); opacity: 1; }
+    }
+
+    @keyframes glitchText {
+      0%, 100% { text-shadow: 3px 0 #ff0040, -3px 0 #0ff; }
+      25% { text-shadow: -3px 0 #ff0040, 3px 0 #0ff; }
+      50% { text-shadow: 3px 3px #ff0040, -3px -3px #0ff; }
+      75% { text-shadow: -3px 3px #ff0040, 3px -3px #0ff; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-size: 4rem;
+      letter-spacing: 10px;
+      color: #00ff41;
+      animation: glitchIn 1.5s ease forwards, glitchText 4s 1.5s infinite;
+      margin-bottom: 30px;
+    }
+
+    .ascii-art {
+      color: #00ff41;
+      font-size: 0.55rem;
+      line-height: 1.1;
+      white-space: pre;
+      opacity: 0;
+      animation: fadeUp 1s 2s ease forwards;
+      margin-bottom: 30px;
+    }
+
+    .message {
+      font-size: 1.3rem;
+      color: #ccc;
+      opacity: 0;
+      animation: fadeUp 1s 2.5s ease forwards;
+      margin-bottom: 10px;
+      letter-spacing: 3px;
+    }
+
+    .respect {
+      font-size: 1rem;
+      color: #00ff41;
+      opacity: 0;
+      animation: fadeUp 1s 3s ease forwards;
+      margin-bottom: 40px;
+    }
+
+    .home-link {
+      opacity: 0;
+      animation: fadeUp 1s 3.5s ease forwards;
+    }
+
+    .home-link a {
+      color: #0ff;
+      text-decoration: none;
+      border: 1px solid #0ff;
+      padding: 12px 30px;
+      letter-spacing: 3px;
+      transition: all 0.3s;
+      font-size: 1rem;
+    }
+
+    .home-link a:hover {
+      background: #0ff;
+      color: #0a0a0a;
+    }
+
+    .stats {
+      opacity: 0;
+      animation: fadeUp 1s 3.2s ease forwards;
+      margin-bottom: 30px;
+      color: #555;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="matrix"></canvas>
+  <div class="scanlines"></div>
+
+  <div class="content">
+    <h1>ACCESS GRANTED</h1>
+
+    <pre class="ascii-art">
+    ██████╗ ███████╗███████╗██████╗ ███████╗ ██████╗████████╗
+    ██╔══██╗██╔════╝██╔════╝██╔══██╗██╔════╝██╔════╝╚══██╔══╝
+    ██████╔╝█████╗  ███████╗██████╔╝█████╗  ██║        ██║
+    ██╔══██╗██╔══╝  ╚════██║██╔═══╝ ██╔══╝  ██║        ██║
+    ██║  ██║███████╗███████║██║     ███████╗╚██████╗   ██║
+    ╚═╝  ╚═╝╚══════╝╚══════╝╚═╝     ╚══════╝ ╚═════╝   ╚═╝
+    </pre>
+
+    <p class="message">You cleared the first gate.</p>
+    <p class="respect">&gt; But can you go deeper? &lt;</p>
+
+    <p class="stats">// phase 1 complete — 5 of 10 challenges cleared</p>
+
+    <div class="home-link">
+      <a href="/task/6">[ ENTER PHASE 2 ]</a>
+    </div>
+  </div>
+
+  <script>
+    // Matrix rain effect
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF';
+    const fontSize = 14;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = new Array(columns).fill(1);
+
+    function drawMatrix() {
+      ctx.fillStyle = 'rgba(10, 10, 10, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = '#00ff41';
+      ctx.font = fontSize + 'px monospace';
+
+      for (let i = 0; i < drops.length; i++) {
+        const char = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillStyle = Math.random() > 0.98 ? '#fff' : '#00ff41';
+        ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    setInterval(drawMatrix, 50);
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>

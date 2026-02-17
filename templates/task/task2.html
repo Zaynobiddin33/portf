@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LISTEN CAREFULLY</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0a0a0a;
+      color: #00ff41;
+      font-family: 'Share Tech Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: repeating-linear-gradient(0deg, rgba(0,0,0,0.15) 0px, rgba(0,0,0,0.15) 1px, transparent 1px, transparent 3px);
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      opacity: 0.03;
+      z-index: 99;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      92% { opacity: 1; }
+      93% { opacity: 0.3; }
+      94% { opacity: 1; }
+      96% { opacity: 0.8; }
+      97% { opacity: 1; }
+    }
+
+    @keyframes glitchText {
+      0%, 100% { text-shadow: 2px 0 #ff0040, -2px 0 #0ff; }
+      25% { text-shadow: -2px 0 #ff0040, 2px 0 #0ff; }
+      50% { text-shadow: 2px 2px #ff0040, -2px -2px #0ff; }
+      75% { text-shadow: -2px 2px #ff0040, 2px -2px #0ff; }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10% { transform: translateX(-10px); }
+      20% { transform: translateX(10px); }
+      30% { transform: translateX(-10px); }
+      40% { transform: translateX(10px); }
+      50% { transform: translateX(-5px); }
+      60% { transform: translateX(5px); }
+    }
+
+    .container {
+      text-align: center;
+      z-index: 10;
+      animation: flicker 4s infinite;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      letter-spacing: 6px;
+      margin-bottom: 10px;
+      animation: glitchText 3s infinite;
+      color: #0ff;
+    }
+
+    .subtitle {
+      color: #555;
+      font-size: 0.9rem;
+      margin-bottom: 40px;
+    }
+
+    /* Waveform visualizer */
+    .waveform {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      height: 80px;
+      margin: 30px 0;
+    }
+
+    .waveform .bar {
+      width: 4px;
+      background: #00ff41;
+      border-radius: 2px;
+      transition: height 0.1s;
+      height: 10px;
+    }
+
+    .waveform.playing .bar {
+      animation: wave 0.6s ease-in-out infinite alternate;
+    }
+
+    @keyframes wave {
+      from { height: 10px; }
+      to { height: 60px; }
+    }
+
+    .waveform .bar:nth-child(1) { animation-delay: 0s; }
+    .waveform .bar:nth-child(2) { animation-delay: 0.05s; }
+    .waveform .bar:nth-child(3) { animation-delay: 0.1s; }
+    .waveform .bar:nth-child(4) { animation-delay: 0.15s; }
+    .waveform .bar:nth-child(5) { animation-delay: 0.2s; }
+    .waveform .bar:nth-child(6) { animation-delay: 0.25s; }
+    .waveform .bar:nth-child(7) { animation-delay: 0.3s; }
+    .waveform .bar:nth-child(8) { animation-delay: 0.35s; }
+    .waveform .bar:nth-child(9) { animation-delay: 0.4s; }
+    .waveform .bar:nth-child(10) { animation-delay: 0.45s; }
+    .waveform .bar:nth-child(11) { animation-delay: 0.5s; }
+    .waveform .bar:nth-child(12) { animation-delay: 0.55s; }
+    .waveform .bar:nth-child(13) { animation-delay: 0.4s; }
+    .waveform .bar:nth-child(14) { animation-delay: 0.35s; }
+    .waveform .bar:nth-child(15) { animation-delay: 0.3s; }
+    .waveform .bar:nth-child(16) { animation-delay: 0.25s; }
+
+    .play-btn {
+      background: transparent;
+      border: 2px solid #0ff;
+      color: #0ff;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.1rem;
+      padding: 14px 30px;
+      cursor: pointer;
+      letter-spacing: 3px;
+      transition: all 0.3s;
+      margin-bottom: 30px;
+    }
+
+    .play-btn:hover {
+      background: #0ff;
+      color: #0a0a0a;
+    }
+
+    .play-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    input[type="text"] {
+      background: #111;
+      border: 1px solid #00ff41;
+      color: #00ff41;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.2rem;
+      padding: 12px 20px;
+      width: 250px;
+      outline: none;
+      text-align: center;
+      letter-spacing: 8px;
+    }
+
+    input[type="text"]:focus {
+      border-color: #0ff;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    }
+
+    button[type="submit"] {
+      background: transparent;
+      border: 1px solid #00ff41;
+      color: #00ff41;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.2rem;
+      padding: 12px 24px;
+      cursor: pointer;
+      letter-spacing: 2px;
+      transition: all 0.3s;
+    }
+
+    button[type="submit"]:hover {
+      background: #00ff41;
+      color: #0a0a0a;
+    }
+
+    .hint {
+      margin-top: 30px;
+      color: #0ff;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+    }
+
+    .error input[type="text"] {
+      border-color: #ff0040;
+      animation: shake 0.5s ease;
+    }
+
+    .error .error-msg { display: block; }
+
+    .error-msg {
+      display: none;
+      color: #ff0040;
+      margin-top: 15px;
+      font-size: 0.85rem;
+    }
+
+    .prompt {
+      color: #00ff41;
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+
+    .cursor-blink { animation: blink 1s step-end infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>LISTEN CAREFULLY</h1>
+    <p class="subtitle">// challenge 2 of 5</p>
+
+    <div class="waveform" id="waveform">
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+    </div>
+
+    <button class="play-btn" id="playBtn" onclick="playSequence()">&#9654; PLAY TRANSMISSION</button>
+
+    <p class="hint">"The truth is backwards."</p>
+
+    <br>
+    <p class="prompt">&gt; Enter the code<span class="cursor-blink">_</span></p>
+    <form method="POST" class="{% if error %}error{% endif %}">
+      {% csrf_token %}
+      <div class="input-group">
+        <input type="text" name="answer" placeholder="_ _ _ _" maxlength="4" autocomplete="off">
+        <button type="submit">SUBMIT</button>
+      </div>
+      <p class="error-msg">WRONG SEQUENCE. Listen again.</p>
+    </form>
+  </div>
+
+  <script>
+    const digitFrequencies = {
+      7: [852, 1209],
+      2: [697, 1336],
+      9: [852, 1477],
+      4: [770, 1209]
+    };
+
+    const sequence = [7, 2, 9, 4];
+
+    function playTone(digit, audioCtx, startTime, duration) {
+      const freqs = digitFrequencies[digit];
+      freqs.forEach(freq => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.15, startTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(startTime);
+        osc.stop(startTime + duration);
+      });
+    }
+
+    function playSequence() {
+      const btn = document.getElementById('playBtn');
+      const waveform = document.getElementById('waveform');
+      btn.disabled = true;
+      btn.textContent = '▶ PLAYING...';
+      waveform.classList.add('playing');
+
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const toneDuration = 0.5;
+      const gap = 0.3;
+
+      sequence.forEach((digit, i) => {
+        const startTime = audioCtx.currentTime + i * (toneDuration + gap);
+        playTone(digit, audioCtx, startTime, toneDuration);
+      });
+
+      const totalDuration = sequence.length * (toneDuration + gap) * 1000;
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.textContent = '▶ PLAY AGAIN';
+        waveform.classList.remove('playing');
+      }, totalDuration);
+    }
+  </script>
+</body>
+</html>

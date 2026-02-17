@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>YOU'RE CLOSE</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0a0a0a;
+      color: #00ff41;
+      font-family: 'Share Tech Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: repeating-linear-gradient(0deg, rgba(0,0,0,0.15) 0px, rgba(0,0,0,0.15) 1px, transparent 1px, transparent 3px);
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      opacity: 0.03;
+      z-index: 99;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      92% { opacity: 1; }
+      93% { opacity: 0.3; }
+      94% { opacity: 1; }
+      96% { opacity: 0.8; }
+      97% { opacity: 1; }
+    }
+
+    @keyframes glitchText {
+      0%, 100% { text-shadow: 2px 0 #ff0040, -2px 0 #0ff; }
+      25% { text-shadow: -2px 0 #ff0040, 2px 0 #0ff; }
+      50% { text-shadow: 2px 2px #ff0040, -2px -2px #0ff; }
+      75% { text-shadow: -2px 2px #ff0040, 2px -2px #0ff; }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10% { transform: translateX(-10px); }
+      20% { transform: translateX(10px); }
+      30% { transform: translateX(-10px); }
+      40% { transform: translateX(10px); }
+      50% { transform: translateX(-5px); }
+      60% { transform: translateX(5px); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { text-shadow: 0 0 10px #ff6600, 0 0 20px #ff6600; }
+      50% { text-shadow: 0 0 20px #ff6600, 0 0 40px #ff6600, 0 0 60px #ff6600; }
+    }
+
+    .container {
+      text-align: center;
+      z-index: 10;
+      animation: flicker 4s infinite;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      letter-spacing: 6px;
+      margin-bottom: 10px;
+      animation: glitchText 3s infinite;
+      color: #ff6600;
+    }
+
+    .subtitle {
+      color: #555;
+      font-size: 0.9rem;
+      margin-bottom: 40px;
+    }
+
+    .message {
+      color: #888;
+      font-size: 1.1rem;
+      margin: 30px 0;
+      line-height: 1.8;
+    }
+
+    .hint {
+      color: #ff6600;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      margin-bottom: 30px;
+      animation: pulse 3s infinite;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    input[type="text"] {
+      background: #111;
+      border: 1px solid #00ff41;
+      color: #00ff41;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.2rem;
+      padding: 12px 20px;
+      width: 200px;
+      outline: none;
+      text-align: center;
+      letter-spacing: 4px;
+    }
+
+    input[type="text"]:focus {
+      border-color: #ff6600;
+      box-shadow: 0 0 10px rgba(255, 102, 0, 0.3);
+    }
+
+    button {
+      background: transparent;
+      border: 1px solid #00ff41;
+      color: #00ff41;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.2rem;
+      padding: 12px 24px;
+      cursor: pointer;
+      letter-spacing: 2px;
+      transition: all 0.3s;
+    }
+
+    button:hover {
+      background: #00ff41;
+      color: #0a0a0a;
+    }
+
+    .prompt {
+      color: #00ff41;
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+
+    .cursor-blink { animation: blink 1s step-end infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .error input[type="text"] {
+      border-color: #ff0040;
+      animation: shake 0.5s ease;
+    }
+    .error .error-msg { display: block; }
+    .error-msg {
+      display: none;
+      color: #ff0040;
+      margin-top: 15px;
+      font-size: 0.85rem;
+    }
+
+    .cookie-icon {
+      font-size: 3rem;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>YOU'RE CLOSE</h1>
+    <p class="subtitle">// challenge 4 of 5</p>
+
+    <div class="cookie-icon">&#x1f36a;</div>
+
+    <p class="message">
+      The clue isn't on this page.<br>
+      It's in your browser.
+    </p>
+
+    <p class="hint">[ Check what this page left behind. ]</p>
+
+    <p class="prompt">&gt; Enter the answer<span class="cursor-blink">_</span></p>
+    <form method="POST" class="{% if error %}error{% endif %}">
+      {% csrf_token %}
+      <div class="input-group">
+        <input type="text" name="answer" placeholder="??" autocomplete="off">
+        <button type="submit">SUBMIT</button>
+      </div>
+      <p class="error-msg">NOT QUITE. Dig deeper.</p>
+    </form>
+  </div>
+
+  <script>
+    document.cookie = "next_clue=the answer is 42; path=/";
+  </script>
+</body>
+</html>

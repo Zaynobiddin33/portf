@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DECODE THIS</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0a0a0a;
+      color: #00ff41;
+      font-family: 'Share Tech Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: repeating-linear-gradient(0deg, rgba(0,0,0,0.15) 0px, rgba(0,0,0,0.15) 1px, transparent 1px, transparent 3px);
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      opacity: 0.03;
+      z-index: 99;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      92% { opacity: 1; }
+      93% { opacity: 0.3; }
+      94% { opacity: 1; }
+      96% { opacity: 0.8; }
+      97% { opacity: 1; }
+    }
+
+    @keyframes glitchText {
+      0%, 100% { text-shadow: 2px 0 #ff0040, -2px 0 #0ff; }
+      25% { text-shadow: -2px 0 #ff0040, 2px 0 #0ff; }
+      50% { text-shadow: 2px 2px #ff0040, -2px -2px #0ff; }
+      75% { text-shadow: -2px 2px #ff0040, 2px -2px #0ff; }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10% { transform: translateX(-10px); }
+      20% { transform: translateX(10px); }
+      30% { transform: translateX(-10px); }
+      40% { transform: translateX(10px); }
+      50% { transform: translateX(-5px); }
+      60% { transform: translateX(5px); }
+    }
+
+    @keyframes typewriter {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    .container {
+      text-align: center;
+      z-index: 10;
+      animation: flicker 4s infinite;
+      max-width: 700px;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      letter-spacing: 6px;
+      margin-bottom: 10px;
+      animation: glitchText 3s infinite;
+      color: #ffcc00;
+    }
+
+    .subtitle {
+      color: #555;
+      font-size: 0.9rem;
+      margin-bottom: 30px;
+    }
+
+    .encoded-box {
+      background: rgba(20, 20, 20, 0.9);
+      border: 1px solid #ffcc00;
+      padding: 30px;
+      margin: 25px 0;
+      word-break: break-all;
+      font-size: 1.1rem;
+      color: #ffcc00;
+      letter-spacing: 2px;
+      line-height: 1.8;
+      text-align: center;
+      position: relative;
+    }
+
+    .encoded-box::before {
+      content: '[ INTERCEPTED TRANSMISSION ]';
+      position: absolute;
+      top: -12px;
+      left: 20px;
+      background: #0a0a0a;
+      padding: 0 10px;
+      font-size: 0.75rem;
+      color: #555;
+    }
+
+    .info {
+      color: #666;
+      font-size: 0.85rem;
+      margin: 15px 0;
+      line-height: 1.6;
+    }
+
+    .hint {
+      color: #ffcc00;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      margin: 20px 0;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    input[type="text"] {
+      background: #111;
+      border: 1px solid #00ff41;
+      color: #00ff41;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.2rem;
+      padding: 12px 20px;
+      width: 250px;
+      outline: none;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      text-align: center;
+    }
+
+    input[type="text"]:focus {
+      border-color: #ffcc00;
+      box-shadow: 0 0 10px rgba(255, 204, 0, 0.3);
+    }
+
+    button {
+      background: transparent;
+      border: 1px solid #00ff41;
+      color: #00ff41;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.2rem;
+      padding: 12px 24px;
+      cursor: pointer;
+      letter-spacing: 2px;
+      transition: all 0.3s;
+    }
+
+    button:hover {
+      background: #00ff41;
+      color: #0a0a0a;
+    }
+
+    .prompt {
+      color: #00ff41;
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+
+    .cursor-blink { animation: blink 1s step-end infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .error input[type="text"] {
+      border-color: #ff0040;
+      animation: shake 0.5s ease;
+    }
+    .error .error-msg { display: block; }
+    .error-msg {
+      display: none;
+      color: #ff0040;
+      margin-top: 15px;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>DECODE THIS</h1>
+    <p class="subtitle">// challenge 8 of 10</p>
+
+    <div class="encoded-box">
+      dGhlIHBhc3N3b3JkIGlzIEJJTkFSWQ==
+    </div>
+
+    <p class="info">
+      We intercepted this transmission.<br>
+      It's not random noise. It's encoded.
+    </p>
+
+    <p class="hint">[ This encoding uses 64 characters. You do the math. ]</p>
+
+    <p class="prompt">&gt; Enter the decoded password<span class="cursor-blink">_</span></p>
+    <form method="POST" class="{% if error %}error{% endif %}">
+      {% csrf_token %}
+      <div class="input-group">
+        <input type="text" name="answer" placeholder="????????" autocomplete="off" autofocus>
+        <button type="submit">SUBMIT</button>
+      </div>
+      <p class="error-msg">DECRYPTION FAILED. Try again.</p>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,0 +1,461 @@
+∂<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>THE TERMINAL</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0a0a0a;
+      color: #00ff41;
+      font-family: 'Share Tech Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: repeating-linear-gradient(0deg, rgba(0,0,0,0.15) 0px, rgba(0,0,0,0.15) 1px, transparent 1px, transparent 3px);
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      opacity: 0.03;
+      z-index: 99;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    }
+
+    .terminal-wrapper {
+      z-index: 10;
+      width: 90%;
+      max-width: 700px;
+    }
+
+    .terminal-header {
+      background: #1a1a1a;
+      padding: 8px 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 8px 8px 0 0;
+      border: 1px solid #333;
+      border-bottom: none;
+    }
+
+    .terminal-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .dot-red { background: #ff5f57; }
+    .dot-yellow { background: #febc2e; }
+    .dot-green { background: #28c840; }
+
+    .terminal-title {
+      color: #666;
+      font-size: 0.8rem;
+      margin-left: 10px;
+    }
+
+    .subtitle {
+      color: #555;
+      font-size: 0.8rem;
+      margin-left: auto;
+    }
+
+    .terminal {
+      background: rgba(10, 10, 10, 0.95);
+      border: 1px solid #333;
+      border-radius: 0 0 8px 8px;
+      padding: 20px;
+      min-height: 400px;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    .terminal::-webkit-scrollbar { width: 6px; }
+    .terminal::-webkit-scrollbar-track { background: #111; }
+    .terminal::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+
+    .output-line {
+      margin: 2px 0;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .output-line.system { color: #0ff; }
+    .output-line.error { color: #ff0040; }
+    .output-line.success { color: #00ff41; }
+    .output-line.warning { color: #ffcc00; }
+    .output-line.file { color: #bf00ff; }
+    .output-line.dim { color: #444; }
+
+    .input-line {
+      display: flex;
+      align-items: center;
+      margin-top: 5px;
+    }
+
+    .input-line .prompt-text {
+      color: #00ff41;
+      margin-right: 8px;
+      white-space: nowrap;
+    }
+
+    .input-line input {
+      background: transparent;
+      border: none;
+      color: #00ff41;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.9rem;
+      outline: none;
+      flex: 1;
+      caret-color: #00ff41;
+    }
+
+    /* Hidden form for final answer */
+    .answer-section {
+      margin-top: 20px;
+      text-align: center;
+      display: none;
+    }
+
+    .answer-section.visible {
+      display: block;
+    }
+
+    .answer-group {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .answer-group input {
+      background: #111;
+      border: 1px solid #00ff41;
+      color: #00ff41;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.1rem;
+      padding: 10px 16px;
+      width: 200px;
+      outline: none;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      text-align: center;
+    }
+
+    .answer-group button {
+      background: transparent;
+      border: 1px solid #00ff41;
+      color: #00ff41;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.1rem;
+      padding: 10px 20px;
+      cursor: pointer;
+      letter-spacing: 2px;
+      transition: all 0.3s;
+    }
+
+    .answer-group button:hover {
+      background: #00ff41;
+      color: #0a0a0a;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10% { transform: translateX(-10px); }
+      20% { transform: translateX(10px); }
+      30% { transform: translateX(-10px); }
+      40% { transform: translateX(10px); }
+    }
+
+    .error-shake input {
+      border-color: #ff0040 !important;
+      animation: shake 0.5s ease;
+    }
+
+    .error-shake .error-msg { display: block; }
+
+    .error-msg {
+      display: none;
+      color: #ff0040;
+      margin-top: 10px;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="terminal-wrapper">
+    <div class="terminal-header">
+      <div class="terminal-dot dot-red"></div>
+      <div class="terminal-dot dot-yellow"></div>
+      <div class="terminal-dot dot-green"></div>
+      <span class="terminal-title">hacker@challenge:~/vault</span>
+      <span class="subtitle">// challenge 10 of 10</span>
+    </div>
+    <div class="terminal" id="terminal">
+      <div class="output-line system">Welcome to the final challenge.</div>
+      <div class="output-line system">You have access to a restricted file system.</div>
+      <div class="output-line system">Find the password hidden somewhere in these files.</div>
+      <div class="output-line dim">Type "help" for available commands.</div>
+      <div class="output-line">&nbsp;</div>
+      <div class="input-line">
+        <span class="prompt-text">hacker@vault:~$</span>
+        <input type="text" id="cmdInput" autocomplete="off" autofocus>
+      </div>
+    </div>
+
+    <div class="answer-section {% if error %}visible error-shake{% endif %}" id="answerSection">
+      <form method="POST">
+        {% csrf_token %}
+        <div class="answer-group">
+          <input type="text" name="answer" placeholder="PASSWORD" autocomplete="off">
+          <button type="submit">UNLOCK</button>
+        </div>
+        <p class="error-msg">WRONG PASSWORD. Keep digging.</p>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const fileSystem = {
+      '~': {
+        type: 'dir',
+        children: ['documents', 'logs', '.hidden', 'readme.txt']
+      },
+      '~/readme.txt': {
+        type: 'file',
+        content: 'The password is NOT here. Keep looking.\nTry checking all directories. Even the hidden ones.\nRemember: ls -a shows everything.'
+      },
+      '~/documents': {
+        type: 'dir',
+        children: ['notes.txt', 'todo.txt']
+      },
+      '~/documents/notes.txt': {
+        type: 'file',
+        content: 'Meeting notes 2024-01-15:\n- Server migration complete\n- New auth system deployed\n- Password vault moved to secure location\n- Check .hidden directory for vault access'
+      },
+      '~/documents/todo.txt': {
+        type: 'file',
+        content: '[ ] Change default passwords\n[ ] Update firewall rules\n[ ] Encrypt the vault\n[x] Hide vault in dotfiles'
+      },
+      '~/logs': {
+        type: 'dir',
+        children: ['access.log', 'error.log']
+      },
+      '~/logs/access.log': {
+        type: 'file',
+        content: '2024-01-15 03:21:04 - User root accessed /vault/.secret\n2024-01-15 03:21:07 - File decrypted successfully\n2024-01-15 03:21:09 - Password retrieved from .hidden/vault.key'
+      },
+      '~/logs/error.log': {
+        type: 'file',
+        content: '[ERROR] 401 Unauthorized: /admin\n[ERROR] 403 Forbidden: /vault (missing key)\n[WARN] Brute force attempt detected from 192.168.1.42\n[INFO] Vault key location: ~/.hidden/vault.key'
+      },
+      '~/.hidden': {
+        type: 'dir',
+        children: ['vault.key', '.note']
+      },
+      '~/.hidden/vault.key': {
+        type: 'file',
+        content: '========================================\n  VAULT ACCESS KEY\n========================================\n  The final password is: ECLIPSE\n  Enter it below to complete the challenge.\n========================================'
+      },
+      '~/.hidden/.note': {
+        type: 'file',
+        content: 'If you found this, you really are thorough.\nThe key is in vault.key. You probably already found it.'
+      }
+    };
+
+    let currentDir = '~';
+    let commandHistory = [];
+    let historyIndex = -1;
+
+    const terminal = document.getElementById('terminal');
+    const cmdInput = document.getElementById('cmdInput');
+
+    function resolvePath(path) {
+      if (path.startsWith('~/') || path === '~') return path;
+      if (path.startsWith('/')) return '~' + path;
+      if (currentDir === '~') return '~/' + path;
+      return currentDir + '/' + path;
+    }
+
+    function addOutput(text, className = '') {
+      const inputLine = terminal.querySelector('.input-line');
+      const line = document.createElement('div');
+      line.className = 'output-line' + (className ? ' ' + className : '');
+      line.textContent = text;
+      terminal.insertBefore(line, inputLine);
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+
+    function processCommand(cmd) {
+      const trimmed = cmd.trim();
+      if (!trimmed) return;
+
+      commandHistory.push(trimmed);
+      historyIndex = commandHistory.length;
+
+      addOutput('hacker@vault:' + currentDir.replace('~', '~') + '$ ' + trimmed);
+
+      const parts = trimmed.split(/\s+/);
+      const command = parts[0].toLowerCase();
+      const args = parts.slice(1);
+
+      switch (command) {
+        case 'help':
+          addOutput('Available commands:', 'system');
+          addOutput('  ls [-a]     List directory contents', 'dim');
+          addOutput('  cd <dir>    Change directory', 'dim');
+          addOutput('  cat <file>  Read file contents', 'dim');
+          addOutput('  pwd         Print working directory', 'dim');
+          addOutput('  clear       Clear terminal', 'dim');
+          addOutput('  help        Show this help', 'dim');
+          addOutput('  submit      Show password input', 'dim');
+          break;
+
+        case 'pwd':
+          addOutput(currentDir);
+          break;
+
+        case 'clear':
+          const lines = terminal.querySelectorAll('.output-line');
+          lines.forEach(l => l.remove());
+          break;
+
+        case 'ls': {
+          const showHidden = args.includes('-a') || args.includes('-la') || args.includes('-al');
+          const targetDir = args.filter(a => !a.startsWith('-'))[0];
+          const dirPath = targetDir ? resolvePath(targetDir) : currentDir;
+          const dir = fileSystem[dirPath];
+
+          if (!dir || dir.type !== 'dir') {
+            addOutput('ls: cannot access \'' + (targetDir || dirPath) + '\': No such directory', 'error');
+          } else {
+            const items = dir.children.filter(item => showHidden || !item.startsWith('.'));
+            if (items.length === 0) {
+              addOutput('(empty)', 'dim');
+            } else {
+              items.forEach(item => {
+                const fullPath = dirPath + '/' + item;
+                const node = fileSystem[fullPath];
+                if (node && node.type === 'dir') {
+                  addOutput('  ' + item + '/', 'system');
+                } else {
+                  addOutput('  ' + item, 'file');
+                }
+              });
+            }
+          }
+          break;
+        }
+
+        case 'cd': {
+          if (!args[0] || args[0] === '~') {
+            currentDir = '~';
+          } else if (args[0] === '..') {
+            if (currentDir !== '~') {
+              const parts = currentDir.split('/');
+              parts.pop();
+              currentDir = parts.join('/') || '~';
+            }
+          } else {
+            const newDir = resolvePath(args[0]);
+            if (fileSystem[newDir] && fileSystem[newDir].type === 'dir') {
+              currentDir = newDir;
+            } else {
+              addOutput('cd: no such directory: ' + args[0], 'error');
+            }
+          }
+          // Update prompt
+          const promptEl = terminal.querySelector('.input-line .prompt-text');
+          promptEl.textContent = 'hacker@vault:' + currentDir.replace('~', '~') + '$';
+          break;
+        }
+
+        case 'cat': {
+          if (!args[0]) {
+            addOutput('cat: missing file operand', 'error');
+          } else {
+            const filePath = resolvePath(args[0]);
+            const file = fileSystem[filePath];
+            if (!file) {
+              addOutput('cat: ' + args[0] + ': No such file or directory', 'error');
+            } else if (file.type === 'dir') {
+              addOutput('cat: ' + args[0] + ': Is a directory', 'error');
+            } else {
+              file.content.split('\n').forEach(line => {
+                if (line.includes('password') || line.includes('Password') || line.includes('ECLIPSE')) {
+                  addOutput(line, 'warning');
+                } else {
+                  addOutput(line);
+                }
+              });
+
+              // Show the answer section when they find the key
+              if (filePath === '~/.hidden/vault.key') {
+                document.getElementById('answerSection').classList.add('visible');
+              }
+            }
+          }
+          break;
+        }
+
+        case 'submit':
+          document.getElementById('answerSection').classList.add('visible');
+          addOutput('Password input activated below.', 'success');
+          break;
+
+        default:
+          addOutput(command + ': command not found. Type "help" for available commands.', 'error');
+      }
+    }
+
+    cmdInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        processCommand(cmdInput.value);
+        cmdInput.value = '';
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (historyIndex > 0) {
+          historyIndex--;
+          cmdInput.value = commandHistory[historyIndex];
+        }
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (historyIndex < commandHistory.length - 1) {
+          historyIndex++;
+          cmdInput.value = commandHistory[historyIndex];
+        } else {
+          historyIndex = commandHistory.length;
+          cmdInput.value = '';
+        }
+      }
+    });
+
+    // Keep focus on input
+    terminal.addEventListener('click', () => cmdInput.focus());
+  </script>
+</body>
+</html>

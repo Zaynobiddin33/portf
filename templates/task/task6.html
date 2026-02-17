@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>READ BETWEEN THE LINES</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0a0a0a;
+      color: #00ff41;
+      font-family: 'Share Tech Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: repeating-linear-gradient(0deg, rgba(0,0,0,0.15) 0px, rgba(0,0,0,0.15) 1px, transparent 1px, transparent 3px);
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      opacity: 0.03;
+      z-index: 99;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      92% { opacity: 1; }
+      93% { opacity: 0.3; }
+      94% { opacity: 1; }
+      96% { opacity: 0.8; }
+      97% { opacity: 1; }
+    }
+
+    @keyframes glitchText {
+      0%, 100% { text-shadow: 2px 0 #ff0040, -2px 0 #0ff; }
+      25% { text-shadow: -2px 0 #ff0040, 2px 0 #0ff; }
+      50% { text-shadow: 2px 2px #ff0040, -2px -2px #0ff; }
+      75% { text-shadow: -2px 2px #ff0040, 2px -2px #0ff; }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10% { transform: translateX(-10px); }
+      20% { transform: translateX(10px); }
+      30% { transform: translateX(-10px); }
+      40% { transform: translateX(10px); }
+      50% { transform: translateX(-5px); }
+      60% { transform: translateX(5px); }
+    }
+
+    .container {
+      text-align: center;
+      z-index: 10;
+      animation: flicker 4s infinite;
+      max-width: 700px;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      letter-spacing: 5px;
+      margin-bottom: 10px;
+      animation: glitchText 3s infinite;
+      color: #bf00ff;
+    }
+
+    .subtitle {
+      color: #555;
+      font-size: 0.9rem;
+      margin-bottom: 30px;
+    }
+
+    .poem-box {
+      background: rgba(20, 20, 20, 0.8);
+      border: 1px solid #333;
+      padding: 25px 30px;
+      margin: 20px 0;
+      text-align: left;
+      line-height: 2;
+      font-size: 0.95rem;
+      color: #aaa;
+    }
+
+    .poem-box .line {
+      display: block;
+    }
+
+    .poem-box .line::first-letter {
+      color: #aaa;
+    }
+
+    .hint {
+      color: #bf00ff;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      margin: 20px 0;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    input[type="text"] {
+      background: #111;
+      border: 1px solid #00ff41;
+      color: #00ff41;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.2rem;
+      padding: 12px 20px;
+      width: 250px;
+      outline: none;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      text-align: center;
+    }
+
+    input[type="text"]:focus {
+      border-color: #bf00ff;
+      box-shadow: 0 0 10px rgba(191, 0, 255, 0.3);
+    }
+
+    button {
+      background: transparent;
+      border: 1px solid #00ff41;
+      color: #00ff41;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.2rem;
+      padding: 12px 24px;
+      cursor: pointer;
+      letter-spacing: 2px;
+      transition: all 0.3s;
+    }
+
+    button:hover {
+      background: #00ff41;
+      color: #0a0a0a;
+    }
+
+    .prompt {
+      color: #00ff41;
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+
+    .cursor-blink { animation: blink 1s step-end infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .error input[type="text"] {
+      border-color: #ff0040;
+      animation: shake 0.5s ease;
+    }
+    .error .error-msg { display: block; }
+    .error-msg {
+      display: none;
+      color: #ff0040;
+      margin-top: 15px;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>READ BETWEEN THE LINES</h1>
+    <p class="subtitle">// challenge 6 of 10</p>
+
+    <div class="poem-box">
+      <span class="line">Circuits hum beneath the glow of midnight screens,</span>
+      <span class="line">Illuminated paths that no one ever sees.</span>
+      <span class="line">Passwords fall like rain upon the wire,</span>
+      <span class="line">Hidden truths encrypted, climbing ever higher.</span>
+      <span class="line">Every lock will break if you know where to start,</span>
+      <span class="line">Read the signs — the answer's in the art.</span>
+    </div>
+
+    <p class="hint">[ The beginning of each line tells a story. ]</p>
+
+    <p class="prompt">&gt; Enter the word<span class="cursor-blink">_</span></p>
+    <form method="POST" class="{% if error %}error{% endif %}">
+      {% csrf_token %}
+      <div class="input-group">
+        <input type="text" name="answer" placeholder="??????" autocomplete="off" autofocus>
+        <button type="submit">SUBMIT</button>
+      </div>
+      <p class="error-msg">WRONG. Read more carefully.</p>
+    </form>
+  </div>
+</body>
+</html>
