@@ -428,6 +428,32 @@
     transition: transform 0.3s ease;
   }
 
+
+.audio-control-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+    border-radius: 8px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.audio-control-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.audio-control-btn i {
+    font-size: 1.2rem;
+} 
+
   </style>
   <body>
 
@@ -451,9 +477,11 @@
 
     <div class="row m-sm-2" style="position: relative; z-index: 1;">
         <div class="col-xl-3 col-12-lg col-md-12 h700 bord">
-          <div class="col-12 ms-2">
+          <div class="row col-12 ms-2">
+
+            <div class="col-10 mt-3">
             <a href="{%url 'main'%}">
-              <div class="col-12 mt-3 d-flex" style="height: 70px;">
+              <div class="profil-sec d-flex" style="height: 70px;">
                   <div class="profile"></div>
                   <div class="ms-2">
                     <h1 class="m-0 glitch" data-text="Zayn.S">Zayn.S</h1>
@@ -461,6 +489,15 @@
                   </div>
               </div>
             </a>
+            </div>
+            
+            <div class="col-2 mt-3 d-flex justify-content-center align-items-center" style=" height:70px">
+              <audio id="bgAudio" src="{%static 'assets/polk.mp3'%}" autoplay muted loop></audio>
+              <button id="muteToggle" class="ms-3 audio-control-btn" title="Toggle Music">
+                  <i id="audioIcon" class="bi bi-volume-mute"></i>
+              </button>
+
+            </div>
               <div class="col-12  justify-content-left d-flex mt-3">
                 <h1 class="hello-magnetic" id="helloText">Hello...</h1>
               </div>
@@ -1028,6 +1065,29 @@ conDiv.addEventListener('mouseleave', () => {
       el.style.animation = 'none';
     });
   }, 1200);
+</script>
+
+<script>
+const audio = document.getElementById('bgAudio');
+const muteBtn = document.getElementById('muteToggle');
+const audioIcon = document.getElementById('audioIcon');
+
+muteBtn.addEventListener('click', function(e) {
+    e.preventDefault(); // Stop the link from firing
+    
+    if (audio.muted) {
+        audio.muted = false;
+        audio.play();
+        // Switch classes to 'Volume Up'
+        audioIcon.classList.remove('bi-volume-mute');
+        audioIcon.classList.add('bi-volume-up');
+    } else {
+        audio.muted = true;
+        // Switch classes back to 'Mute'
+        audioIcon.classList.remove('bi-volume-up');
+        audioIcon.classList.add('bi-volume-mute');
+    }
+});
 </script>
 
 <div class="d-flex justify-content-center mb-3" style="opacity: 0.15; transition: opacity 0.5s;"
